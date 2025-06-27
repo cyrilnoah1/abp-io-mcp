@@ -743,7 +743,7 @@ export function uiTools(apiClient: AbpApiClient): ToolHandlers {
         });
         
         const validatedArgs = schema.parse(args);
-        const result = await apiClient.generateForm(validatedArgs);
+        const result = await apiClient.generateForm(validatedArgs as any);
         
         return {
           success: true,
