@@ -16,7 +16,7 @@ const program = new Command();
 program
   .name('abp-io-mcp-server')
   .description('ABP.IO MCP Server - Interact with ABP applications and services')
-  .version('1.0.0')
+  .version('1.1.1')
   .option('--api-key <key>', 'ABP API key for authentication')
   .option('--base-url <url>', 'Base URL for ABP API', 'http://localhost:44300')
   .option('--stdio', 'Use stdio transport (for MCP clients)')
@@ -25,32 +25,17 @@ program
 const options = program.opts();
 
 async function main() {
-  // Validate required options
-  if (!options.apiKey) {
-    console.error('Error: --api-key is required');
-    process.exit(1);
-  }
-
-  // Initialize API client
+  // Initialize API client (even without credentials for tool registration)
   const apiClient = new AbpApiClient({
-    baseUrl: options.baseUrl,
-    apiKey: options.apiKey,
+    baseUrl: options.baseUrl || 'http://localhost:44300',
+    apiKey: options.apiKey || '',
   });
-
-  // Test API connection
-  try {
-    await apiClient.testConnection();
-    console.error(`Connected to ABP API at ${options.baseUrl}`);
-  } catch (error) {
-    console.error(`Failed to connect to ABP API: ${error}`);
-    process.exit(1);
-  }
 
   // Create MCP server
   const server = new Server(
     {
       name: 'abp-io-mcp-server',
-      version: '1.0.0',
+      version: '1.1.1',
     },
     {
       capabilities: {
@@ -59,7 +44,7 @@ async function main() {
     }
   );
 
-  // Initialize tools with API client
+  // Initialize tools with API client (ALWAYS register tools)
   const toolHandlers = abpTools(apiClient);
 
   // Register list tools handler
@@ -80,6 +65,19 @@ async function main() {
     const handler = toolHandlers[name];
     if (!handler) {
       throw new Error(`Unknown tool: ${name}`);
+    }
+
+    // Check for API credentials when tool is actually called
+    if (!options.apiKey) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: 'Error: ABP.IO API key is required. Please configure --api-key parameter.',
+          },
+        ],
+        isError: true,
+      };
     }
 
     try {
@@ -105,11 +103,24 @@ async function main() {
     }
   });
 
-  // Start server
+  // Start server FIRST
   if (options.stdio) {
     const transport = new StdioServerTransport();
     await server.connect(transport);
     console.error('ABP.IO MCP Server running on stdio');
+    
+    // Test API connection AFTER server is running (optional)
+    if (options.apiKey) {
+      try {
+        await apiClient.testConnection();
+        console.error(`✓ Connected to ABP API at ${options.baseUrl}`);
+      } catch (error) {
+        console.error(`⚠ Warning: Could not connect to ABP API at ${options.baseUrl}`);
+        console.error(`  Tools are available but will require valid API connection to execute.`);
+      }
+    } else {
+      console.error(`⚠ No API key provided. Tools are available but will require --api-key to execute.`);
+    }
   } else {
     console.log('Use --stdio flag to run as MCP server');
     process.exit(0);

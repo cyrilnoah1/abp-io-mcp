@@ -1,6 +1,6 @@
 {
   "name": "abp-io-mcp-server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A comprehensive Model Context Protocol (MCP) server for ABP.IO framework with 48+ tools for application development, UI generation, and management operations.",
   "main": "dist/index.js",
   "bin": {
