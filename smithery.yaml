@@ -1,0 +1,201 @@
+name: abp-io-mcp-server
+version: 1.0.0
+description: A Model Context Protocol (MCP) server for ABP.IO that enables AI models to interact with your ABP applications and framework.
+
+author:
+  name: ABP.IO MCP Team
+  email: support@abp-io-mcp.com
+
+repository:
+  type: git
+  url: https://github.com/cyrilnoah1/abp-io-mcp.git
+
+license: MIT
+
+keywords:
+  - abp
+  - abp.io
+  - mcp
+  - model-context-protocol
+  - asp.net-core
+  - dotnet
+  - domain-driven-design
+  - microservices
+  - framework
+
+categories:
+  - Development Tools
+  - Web Frameworks
+  - API Integration
+
+platforms:
+  - node
+
+runtime:
+  node: ">=18.0.0"
+
+dependencies:
+  production:
+    - "@modelcontextprotocol/sdk"
+    - "axios"
+    - "commander"
+    - "zod"
+  
+  development:
+    - "@types/node"
+    - "typescript"
+    - "eslint"
+    - "jest"
+
+configuration:
+  required:
+    - api_key: 
+        description: "ABP API key for authentication"
+        type: string
+        secure: true
+    - base_url:
+        description: "Base URL for ABP API"
+        type: string
+        default: "http://localhost:44300"
+  
+  optional:
+    - timeout:
+        description: "Request timeout in milliseconds"
+        type: number
+        default: 30000
+
+commands:
+  dev:
+    description: "Run in development mode"
+    script: "npm run dev"
+  
+  build:
+    description: "Build the project"
+    script: "npm run build"
+  
+  test:
+    description: "Run tests"
+    script: "npm test"
+
+capabilities:
+  - name: Application Management
+    description: Create, read, update, delete ABP applications
+    tools:
+      - abp_get_applications
+      - abp_get_application
+      - abp_create_application
+      - abp_update_application
+      - abp_delete_application
+
+  - name: Module Management
+    description: Install and manage ABP modules
+    tools:
+      - abp_get_modules
+      - abp_get_module
+      - abp_install_module
+      - abp_uninstall_module
+      - abp_get_popular_modules
+
+  - name: Entity Management
+    description: Create and manage domain entities
+    tools:
+      - abp_get_entities
+      - abp_get_entity
+      - abp_create_entity
+      - abp_generate_crud
+
+  - name: User Management
+    description: Complete user lifecycle management
+    tools:
+      - abp_get_users
+      - abp_get_user
+      - abp_create_user
+      - abp_update_user
+      - abp_delete_user
+
+  - name: Tenant Management
+    description: Multi-tenancy management for SaaS applications
+    tools:
+      - abp_get_tenants
+      - abp_get_tenant
+      - abp_create_tenant
+      - abp_update_tenant
+      - abp_delete_tenant
+
+  - name: Permission Management
+    description: Fine-grained permission system
+    tools:
+      - abp_get_permissions
+      - abp_get_permissions_by_group
+      - abp_grant_permission
+      - abp_revoke_permission
+
+  - name: Audit Logging
+    description: Comprehensive audit trail and monitoring
+    tools:
+      - abp_get_audit_logs
+      - abp_get_audit_log
+      - abp_get_audit_summary
+
+  - name: Background Jobs
+    description: Job queue management and monitoring
+    tools:
+      - abp_get_background_jobs
+      - abp_get_background_job
+      - abp_enqueue_background_job
+      - abp_delete_background_job
+      - abp_get_common_job_types
+
+examples:
+  - name: Basic Usage
+    description: Get all ABP applications
+    command: "abp_get_applications"
+    args: {}
+
+  - name: Create Application
+    description: Create a new ABP microservice application
+    command: "abp_create_application"
+    args:
+      name: "my-microservice"
+      displayName: "My Microservice App"
+      template: "microservice"
+      framework: "angular"
+      database: "ef"
+
+  - name: Install Module
+    description: Install the Identity Pro module
+    command: "abp_install_module"
+    args:
+      packageName: "Volo.Abp.Identity.Pro"
+
+  - name: Create Entity
+    description: Create a Product entity with properties
+    command: "abp_create_entity"
+    args:
+      name: "Product"
+      namespace: "MyApp.Products"
+      isAuditedEntity: true
+      properties:
+        - name: "Name"
+          type: "string"
+          isRequired: true
+          maxLength: 100
+        - name: "Price"
+          type: "decimal"
+          isRequired: true
+
+documentation:
+  getting_started: "README.md#installation"
+  api_reference: "README.md#available-tools"
+  examples: "README.md#examples"
+  troubleshooting: "README.md#troubleshooting"
+
+support:
+  issues: "https://github.com/cyrilnoah1/abp-io-mcp/issues"
+  discussions: "https://github.com/cyrilnoah1/abp-io-mcp/discussions"
+  email: "support@abp-io-mcp.com"
+
+tags:
+  - latest
+  - v1.0.0
+  - stable 
