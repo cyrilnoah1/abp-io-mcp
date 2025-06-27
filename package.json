@@ -1,11 +1,17 @@
 {
   "name": "abp-io-mcp-server",
-  "version": "1.0.0",
-  "description": "A Model Context Protocol (MCP) server for ABP.IO that enables AI models to interact with your ABP applications and framework.",
+  "version": "1.1.0",
+  "description": "A comprehensive Model Context Protocol (MCP) server for ABP.IO framework with 48+ tools for application development, UI generation, and management operations.",
   "main": "dist/index.js",
   "bin": {
     "abp-io-mcp-server": "dist/index.js"
   },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -13,7 +19,8 @@
     "start": "node dist/index.js",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "abp",
@@ -24,9 +31,24 @@
     "dotnet",
     "domain-driven-design",
     "microservices",
-    "framework"
+    "framework",
+    "ai",
+    "chatgpt",
+    "claude",
+    "ui-generation",
+    "blazor",
+    "angular",
+    "mvc",
+    "multi-tenancy",
+    "saas",
+    "crud",
+    "api-client",
+    "development-tools"
   ],
-  "author": "ABP.IO MCP Server",
+  "author": {
+    "name": "Cyril Noah",
+    "url": "https://github.com/cyrilnoah1"
+  },
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.0",
@@ -48,7 +70,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cyrilnoah1/abp-io-mcp.git"
+    "url": "git+https://github.com/cyrilnoah1/abp-io-mcp.git"
   },
   "bugs": {
     "url": "https://github.com/cyrilnoah1/abp-io-mcp/issues"
