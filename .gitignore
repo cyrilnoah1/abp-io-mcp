@@ -103,4 +103,23 @@ temp/
 *.ntvs*
 *.njsproj
 *.sln
-*.sw? 
+*.sw?
+
+# MCP Server specific
+mcp-debug/
+mcp-logs/
+*.mcp.log
+
+# ABP.IO specific
+abp-temp/
+abp-cache/
+*.abp.json
+
+# Test files (temporary/mock)
+test-mock-*
+mock-server.*
+*-test-temp.*
+
+# Local configuration overrides
+config.local.*
+settings.local.* 
