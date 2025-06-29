@@ -88,7 +88,11 @@ This comprehensive MCP server provides **48+ tools** covering all aspects of ABP
 No installation required! Just use npx to run the latest version:
 
 ```bash
+# Full mode (requires API key)
 npx abp-io-mcp-server --api-key=YOUR_API_KEY --base-url=https://your-abp-app.com --stdio
+
+# Info-only mode (no API key required)
+npx abp-io-mcp-server --info-only-mode --stdio
 ```
 
 ### Method 2: Global Installation
@@ -97,8 +101,11 @@ npx abp-io-mcp-server --api-key=YOUR_API_KEY --base-url=https://your-abp-app.com
 # Install globally
 npm install -g abp-io-mcp-server
 
-# Run the server
+# Run in full mode
 abp-io-mcp-server --api-key=YOUR_API_KEY --base-url=https://your-abp-app.com --stdio
+
+# Run in info-only mode  
+abp-io-mcp-server --info-only-mode --stdio
 ```
 
 ### Method 3: Local Development
@@ -122,9 +129,53 @@ npm run dev -- --api-key=YOUR_API_KEY --base-url=https://your-abp-app.com --stdi
 
 ### Required Parameters
 
-- `--api-key`: Your ABP application API key
-- `--base-url`: Base URL of your ABP application (default: http://localhost:44300)
 - `--stdio`: Use stdio transport for MCP clients
+
+### Authentication Parameters
+
+- `--api-key`: Your ABP application API key (required for full functionality)
+- `--base-url`: Base URL of your ABP application (default: http://localhost:44300)
+- `--info-only-mode`: Enable only informational tools that don't require API authentication
+
+### Operating Modes
+
+The ABP MCP Server supports two operating modes:
+
+#### 🔐 **Full Mode** (Default)
+- Requires `--api-key` parameter
+- Provides access to all 48+ tools
+- Can perform all operations on your ABP application
+- Recommended for development and production use
+
+```bash
+abp-io-mcp-server --stdio --api-key=YOUR_API_KEY --base-url=https://your-abp-app.com
+```
+
+#### 📚 **Info-Only Mode**
+- No API key required
+- Provides 13 informational and UI generation tools
+- Includes ABP documentation, best practices, troubleshooting guides
+- Generate UI component templates for Angular, Blazor, and MVC
+- Perfect for exploring ABP concepts and creating code templates without a running application
+
+```bash
+abp-io-mcp-server --stdio --info-only-mode
+```
+
+**Info-Only Mode Tools:**
+- `abp_get_info` - ABP Framework overview and capabilities
+- `abp_get_documentation` - Links to official documentation
+- `abp_get_help` - Usage guide and examples
+- `abp_list_available_modules` - All available ABP modules
+- `abp_list_ui_frameworks` - Supported UI frameworks
+- `abp_list_database_providers` - Database options
+- `abp_get_cli_commands` - CLI reference
+- `abp_get_best_practices` - Development guidelines
+- `abp_get_troubleshooting_guide` - Common issues and solutions
+- `abp_generate_component` - Generate UI component templates (Angular, Blazor, MVC)
+- `abp_get_themes` - Available themes and customization information
+- `abp_generate_form` - Generate form templates with validation
+- `abp_get_ui_examples` - Code examples and snippets for different frameworks
 
 ### Environment Variables
 
@@ -145,13 +196,25 @@ Add the following to your Claude Desktop configuration file:
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
-#### Using NPX (Recommended)
+#### Full Mode (All Tools)
 ```json
 {
   "mcpServers": {
     "abp-io": {
       "command": "npx",
       "args": ["-y", "abp-io-mcp-server", "--api-key=YOUR_API_KEY", "--base-url=https://your-abp-app.com", "--stdio"]
+    }
+  }
+}
+```
+
+#### Info-Only Mode (No API Key Required)
+```json
+{
+  "mcpServers": {
+    "abp-io-info": {
+      "command": "npx",
+      "args": ["-y", "abp-io-mcp-server", "--info-only-mode", "--stdio"]
     }
   }
 }

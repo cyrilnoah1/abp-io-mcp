@@ -8,6 +8,8 @@ import { permissionTools } from './permission-tools.js';
 import { auditTools } from './audit-tools.js';
 import { backgroundJobTools } from './background-job-tools.js';
 import { uiTools } from './ui-tools.js';
+import { infoTools } from './info-tools.js';
+import { hybridUiTools } from './hybrid-ui-tools.js';
 
 export interface ToolHandler {
   name: string;
@@ -29,5 +31,7 @@ export function abpTools(apiClient: AbpApiClient): ToolHandlers {
     ...auditTools(apiClient),
     ...backgroundJobTools(apiClient),
     ...uiTools(apiClient),
+    ...infoTools(apiClient),
+    ...hybridUiTools(apiClient),
   };
 } 
